@@ -19,5 +19,9 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: color.white,
     textAlign: "center"
+  },
+
+  img: {
+    width: 30
   }
 });

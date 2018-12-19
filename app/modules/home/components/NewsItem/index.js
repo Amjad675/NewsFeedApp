@@ -7,7 +7,7 @@ import { Actions } from "react-native-router-flux";
 import styles from "./styles";
 
 const NewsItem = ({ article }) => {
-  const { title, url, source, publishedAt } = article;
+  const { title, urlToImage, source, publishedAt } = article;
   return (
     <TouchableHighlight
       style={styles.container}
@@ -15,8 +15,8 @@ const NewsItem = ({ article }) => {
       onPress={() => Actions.Article({ article, title })}
     >
       <View style={[styles.wrapper]}>
-        {article.urlToImage && (
-          <Image source={{ uri: article.urlToImage }} style={styles.img} />
+        {urlToImage && (
+          <Image source={{ uri: urlToImage }} style={{width: 80, height: 80}}/>
         )}
 
         <View style={[styles.info]}>

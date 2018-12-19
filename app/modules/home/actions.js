@@ -39,3 +39,10 @@ export function getHeadlinesBySource(source) {
     });
   };
 }
+
+export function filterHeadlinesBySearch(articles) {
+  return dispatch => {
+    dispatch({ type: c.RETRIEVING_HEADLINES });
+    dispatch({ type: c.HEADLINES_AVAILABLE, data: {articles} });
+  };
+}
