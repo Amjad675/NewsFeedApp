@@ -3,25 +3,21 @@ import { theme } from "../../index";
 const { padding, color, normalize } = theme;
 
 const styles = StyleSheet.create({
-  category: {
-    // height: 100,
-    paddingHorizontal: padding * 3,
-    paddingVertical: padding * 3,
-    borderRadius: 15,
-    marginBottom: 8,
-    // borderWidth:1,
-    alignItems: "center",
-    justifyContent: "center"
+  container: {
+    flex: 1,
+    flexDirection: "column"
   },
-
-  categoryText: {
-    fontSize: normalize(16),
-    fontWeight: "600",
-    color: color.white,
-    textAlign: "center"
+  wrapper: {
+    flex: 1,
+    flexDirection: "row",
+    marginBottom: 10,
+    alignItems: "flex-start",
+    justifyContent: "flex-start"
   },
-
-  img: {
-    width: 30
+  info: {
+    marginRight: 10,
+    flex: 1
   }
 });
+
+module.exports = styles;
