@@ -31,29 +31,34 @@ class DynamicForm extends Component {
     );
   };
 
-  renderRadioButtonField = field => {
-    let fieldName = field.templateOptions.label;
-
+  renderCheckBoxField = () => {
     return (
       <View>
-        <Container>
-          <ListItem>
-            <Left>
-              <Text>Daily Stand Up</Text>
-            </Left>
-            <Right>
-              <Radio selected={false} />
-            </Right>
-            <Left>
-              <Text>Discussion with Client</Text>
-            </Left>
-            <Right>
-              <Radio selected={true} />
-            </Right>
-          </ListItem>
-        </Container>
+        <Text>This is a CheckBox Field</Text>
       </View>
-    );
+    )
+  };
+
+  renderRadioButtonField = field => {
+    let fieldOptionsLabel = field.templateOptions.label;
+    let fieldOptionNames = field.templateOptions.options;
+
+    // let radioButtons = fieldOptionNames.map((option) => {
+    // return (
+    //   <View>
+    //     <ListItem>
+    //       <Left>
+    //         <Text>{option.text}</Text>
+    //       </Left>
+    //       <Right>
+    //         <Radio selected={true} />
+    //       </Right>
+    //     </ListItem>
+    //   </View>
+    //   )
+    // })
+    
+    return radioButtonsUI;
   };
 
   renderTextAreaField = field => {
@@ -95,6 +100,8 @@ class DynamicForm extends Component {
             ? this.renderTextAreaField(field)
             : fieldType == "radioButtonGroup"
             ? this.renderRadioButtonField(field)
+            : fieldType == "checkboxGroup"
+            ? this.renderCheckBoxField(field)
             : this.renderOtherFields()}
         </View>
       );
