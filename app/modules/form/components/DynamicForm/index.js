@@ -13,13 +13,40 @@ import {
   Left,
   Item,
   Picker,
-  DatePicker
+  DatePicker,
+  Form
 } from "native-base";
+var memberJsonData = require('../../services/memberDetails.json');
 
 class DynamicForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      memberDetails: {}
+    };
+
+    this.getMemberDetails();
+  }
+
+  componentDidMount() {
+    //this.getMemberDetails();
+  }
+
+  getMemberDetails() {
+    this.state.memberDetails = memberJsonData.result;
+  }
+
+  handleChange() {
+    DocumentPicker.show({
+      filetype: [DocumentPickerUtil.pdf()],
+    },(error,res) => {
+      // Android
+      console.log('res : ' + JSON.stringify(res));
+      console.log('URI : ' + res.uri);
+      console.log('Type : ' + res.type);
+      console.log('File Name : ' + res.fileName);
+      console.log('File Size : ' + res.fileSize);
+    });
   }
 
   renderOtherFields = () => {
@@ -28,31 +55,12 @@ class DynamicForm extends Component {
         <Text>This is ANOTHER UNKNOWN FIELD!</Text>
       </View>
     );
-  };
-
-  handleChange() {
-    DocumentPicker.show({
-      filetype: [DocumentPickerUtil.images()],
-    },(error,res) => {
-      // Android
-      console.log(
-        res.uri,
-        res.type, // mime type
-        res.fileName,
-        res.fileSize
-      );
-    });
   }
 
-  renderFileUpload = () => {
-    // return (
-    //   <View>
-    //     <Text>File Upload View</Text>
-    //   </View>
-    // )
+  renderFileUpload = (field) => {
     // iPhone/Android
     return (
-    <View >
+    <View key={field.id}>
       <Text>File Upload View</Text>
         <TouchableOpacity
           activeOpacity={0.5}
@@ -66,25 +74,25 @@ class DynamicForm extends Component {
           />
           <Text style={{ marginTop: 10 }}>Add Attachment</Text>
         </TouchableOpacity>
-        {/* <Text >
+        <Text >
           {this.state.fileUri ? 'URI\n' + this.state.fileUri : ''}
         </Text>
-        <Text style={styles.text}>
+        <Text>
           {this.state.fileType ? 'Type\n' + this.state.fileType : ''}
         </Text>
-        <Text style={styles.text}>
+        <Text>
           {this.state.fileName ? 'File Name\n' + this.state.fileName : ''}
         </Text>
-        <Text style={styles.text}>
+        <Text>
           {this.state.fileSize ? 'File Size\n' + this.state.fileSize : ''}
-        </Text> */}
+        </Text>
       </View>
     )
   }
 
-  renderCalendar = () => {
+  renderCalendar = (field) => {
     return (
-      <View>
+      <View key={field.id}>
         <Text>Calendar View</Text>
         <DatePicker
             defaultDate={new Date(2018, 4, 4)}
@@ -104,10 +112,21 @@ class DynamicForm extends Component {
     )
   }
 
+  renderDropDownValues = (dropDownFields) => {
+    let dropDownUI = dropDownFields.map((option) => {
+    return (
+        <Picker.Item key={option.value+'1'} label={option.text} value={option.value} />
+      )
+    })
+
+    return dropDownUI;
+  }
+
   renderDropDown = (field) => {
     let dropDownLabel = field.templateOptions.label;
+    let dropDownFields = field.templateOptions.options;
     return (
-      <View>
+      <View key={field.id}>
         <Text>{dropDownLabel}</Text>
         <Item picker>
           <Picker
@@ -119,11 +138,7 @@ class DynamicForm extends Component {
             // selectedValue={this.state.selected2}
             // onValueChange={this.onValueChange2.bind(this)}
           >
-            <Picker.Item label="Wallet" value="key0" />
-            <Picker.Item label="ATM Card" value="key1" />
-            <Picker.Item label="Debit Card" value="key2" />
-            <Picker.Item label="Credit Card" value="key3" />
-            <Picker.Item label="Net Banking" value="key4" />
+            {this.renderDropDownValues(dropDownFields)}
           </Picker>
         </Item>
       </View>
@@ -133,7 +148,7 @@ class DynamicForm extends Component {
   renderImageUpload = (field) => {
     let imageUploadLabel = field.templateOptions.label;
     return (
-      <View>
+      <View key={field.id}>
         <Text>{imageUploadLabel}</Text>
         <PhotoUpload
           onPhotoSelect={avatar => {
@@ -170,7 +185,7 @@ class DynamicForm extends Component {
         </ListItem>
       </View>
     )
-  };
+  }
 
   renderCheckBoxGroup = (field) => {
     let checkBoxGroupLabel = field.templateOptions.label;
@@ -181,12 +196,12 @@ class DynamicForm extends Component {
         {this.renderCheckBoxField(checkBoxOptionNames)}
       </View>
     )
-  };
+  }
 
-  renderCheckBoxField = checkBoxOptionNames => {
+  renderCheckBoxField = (checkBoxOptionNames) => {
     let checkBoxUI = checkBoxOptionNames.map((option) => {
     return (
-      <View>
+      <View key={option.value}>
         <ListItem>
           <CheckBox checked={true} />
           <Body>
@@ -198,7 +213,7 @@ class DynamicForm extends Component {
     })
 
     return checkBoxUI;
-  };
+  }
 
   renderRadioButton = (field) => {
     let radioButtonGroupLabel = field.templateOptions.label;
@@ -211,10 +226,10 @@ class DynamicForm extends Component {
     )
   }
 
-  renderRadioButtonField = radioButtonOptionNames => {
+  renderRadioButtonField = (radioButtonOptionNames) => {
     let radioButtonsUI = radioButtonOptionNames.map((option) => {
     return (
-      <View>
+      <View key={option.value}>
         <ListItem>
           <Left>
             <Text>{option.text}</Text>
@@ -228,41 +243,44 @@ class DynamicForm extends Component {
     })
 
     return radioButtonsUI;
-  };
+  }
 
-  renderTextAreaField = field => {
+  renderTextAreaField = (field) => {
     let fieldName = field.templateOptions.label;
+    let fieldKey = field.key;
 
     return (
-      <View>
+      <View key={fieldKey}>
         <Text>{fieldName}</Text>
         <TextInput
           style={{ padding: 4 }}
           placeholder={fieldName}
           multiline={true}
           numberOfLines={5}
+          value={this.state.memberDetails.properties.find(a => a.key == `${fieldKey}`).value}
         />
       </View>
     );
-  };
+  }
 
-  renderTextField = field => {
+  renderTextField = (field) => {
     let fieldName = field.templateOptions.label;
+    let fieldKey = field.key;
 
     return (
-      <View>
+      <View key={fieldKey}>
         <Text>{fieldName}</Text>
-        <TextInput style={{ padding: 4 }} placeholder={fieldName} />
+        <TextInput style={{ padding: 4 }} placeholder={fieldName} value={this.state.memberDetails.properties.find(a => a.key == `${fieldKey}`).value} />
       </View>
     );
-  };
+  }
 
-  renderFields = fields => {
+  renderFields = (fields) => {
     let fieldsUI = fields.map(field => {
       let fieldType = field.templateOptions.type;
 
       return (
-        <View>
+        <View key={field.id}>
           {fieldType == "text"
             ? this.renderTextField(field)
             : fieldType == "address"
@@ -287,7 +305,7 @@ class DynamicForm extends Component {
     });
 
     return fieldsUI;
-  };
+  }
 
   renderTab = () => {
     let model = this.props.model;
@@ -297,7 +315,7 @@ class DynamicForm extends Component {
       let fields = m.fields;
 
       return (
-        <View>
+        <View key={m.id}>
           <Text>{tab}</Text>
           <View
             style={{
@@ -311,7 +329,13 @@ class DynamicForm extends Component {
     });
 
     return formUI;
-  };
+  }
+
+  onSubmit = (e) => {
+    console.log(e);
+    if (this.props.onSubmit)
+      this.props.onSubmit(this.state);
+  }
 
   render() {
     let title = this.props.title || "Member Profile Form";
@@ -319,8 +343,11 @@ class DynamicForm extends Component {
     return (
       <View>
         <ScrollView>
-          <Text>{title}</Text>
-          {this.renderTab()}
+          <Form>    
+            <Text>{title}</Text>
+            {this.renderTab()}
+            <TouchableOpacity onPress={(e) => {this.onSubmit(e)}}><Text>UPDATE</Text></TouchableOpacity>
+          </Form>
         </ScrollView>
       </View>
     );

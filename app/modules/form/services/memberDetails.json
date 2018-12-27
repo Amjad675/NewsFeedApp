@@ -1,0 +1,82 @@
+{
+    "result": {
+      "identity": 329,
+      "memberType": "Person",
+      "name": "Shawarmauu Plate",
+      "profileImageId": "3ee1198d-9493-4234-944d-a5bbfa2d0456",
+      "memberStatus": "Active",
+      "tenantId": 99,
+      "contactFirstName": "Shawarmauu",
+      "contactLastName": "Plate",
+      "contactName": "Shawarmauu Plate",
+      "contactEmail": "pizoba@datasoma.com",
+      "contactPhone": "0778888888",
+      "currentMemberLevelId": "25fcc455-de23-4a00-1d23-08d6600dc42f",
+      "properties": [
+        {
+          "key": "firstName",
+          "value": "Shawarmauu"
+        },
+        {
+          "key": "lastName",
+          "value": "Plate"
+        },
+        {
+          "key": "email",
+          "value": "pizoba@datasoma.com"
+        },
+        {
+          "key": "mobile",
+          "value": "0778888888"
+        },
+        {
+          "key": "profileImage",
+          "value": "3ee1198d-9493-4234-944d-a5bbfa2d0456"
+        },
+        {
+          "key": "hobbies",
+          "value": "[{\"value\":1,\"text\":\"Eat\",\"status\":true},{\"value\":2,\"text\":\"Games\"},{\"value\":3,\"text\":\"Books\",\"status\":false},{\"value\":4,\"text\":\"Outdoor games\"},{\"value\":5,\"text\":\"Lazy \",\"status\":true},{\"value\":6,\"text\":\"Sleep\"},{\"value\":7,\"text\":\"Happy Hour\",\"status\":true}]"
+        },
+        {
+          "key": "activities",
+          "value": "Shooting"
+        },
+        {
+          "key": "landline",
+          "value": "0112889334"
+        },
+        {
+          "key": "kamakazi",
+          "value": "[{\"value\":1,\"text\":\"W\",\"status\":true},{\"value\":2,\"text\":\"T\"},{\"value\":3,\"text\":\"F\"}]"
+        },
+        {
+          "key": "tERER",
+          "value": "true"
+        },
+        {
+          "key": "dropdownds",
+          "value": "2"
+        },
+        {
+          "key": "designation",
+          "value": ""
+        },
+        {
+          "key": "companyName",
+          "value": ""
+        },
+        {
+          "key": "companyPhone",
+          "value": ""
+        },
+        {
+          "key": "companyAddress",
+          "value": "Royal Gardens, Rajagiriya"
+        }
+      ],
+      "id": "478f9ded-1f49-44d2-9e06-08d6600c17a1"
+    },
+    "success": true,
+    "unAuthorizedRequest": false,
+    "__abp": true
+  }
