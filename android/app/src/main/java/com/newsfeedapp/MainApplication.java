@@ -3,6 +3,11 @@ package com.newsfeedapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.farmisen.react_native_file_uploader.RCTFileUploaderPackage;
+import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
+import com.rnfs.RNFSPackage;
+import fr.bamlab.rnimageresizer.ImageResizerPackage;
+import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -22,7 +27,12 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage()
+          new MainReactPackage(),
+            new RCTFileUploaderPackage(),
+            new ReactNativeDocumentPicker(),
+            new RNFSPackage(),
+            new ImageResizerPackage(),
+            new ImagePickerPackage()
       );
     }
 
