@@ -3,7 +3,6 @@ package com.newsfeedapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.farmisen.react_native_file_uploader.RCTFileUploaderPackage;
 import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
 import com.rnfs.RNFSPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
@@ -28,7 +27,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RCTFileUploaderPackage(),
             new ReactNativeDocumentPicker(),
             new RNFSPackage(),
             new ImageResizerPackage(),
