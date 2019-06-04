@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as c from "./constants";
 import * as s from "../../config/appsettings";
+import { Actions } from "react-native-router-flux";
 
 export function getNewsHeadlines(country = "us") {
   return dispatch => {
@@ -45,4 +46,11 @@ export function filterHeadlinesBySearch(articles) {
     dispatch({ type: c.RETRIEVING_HEADLINES });
     dispatch({ type: c.HEADLINES_AVAILABLE, data: {articles} });
   };
+}
+
+export function updateSession(isActive) {
+  return dispatch => {
+    dispatch({ type: c.UPDATE_SESSION, data: isActive });
+    Actions.Login();
+  }
 }

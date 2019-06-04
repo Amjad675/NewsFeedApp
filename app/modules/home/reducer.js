@@ -4,7 +4,8 @@ let initialState = {
   isFetching: true,
   articles: [],
   hasError: false,
-  errorMessage: ""
+  errorMessage: "",
+  sessionActive: true
 };
 
 const homeReducer = (state = initialState, action) => {
@@ -33,6 +34,12 @@ const homeReducer = (state = initialState, action) => {
         hasError: true,
         errorMessage: error
       };
+    }
+    case c.UPDATE_SESSION: {
+      return {
+        ...state,
+        sessionActive: action.data
+      }
     }
     default:
       return state;

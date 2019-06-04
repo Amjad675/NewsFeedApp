@@ -13,7 +13,7 @@ import SearchBox from "../../components/SearchBox";
 import UserInactivity from "react-native-user-inactivity";
 import { actions as home } from "../../index";
 
-const { getNewsHeadlines, filterHeadlinesBySearch } = home;
+const { getNewsHeadlines, filterHeadlinesBySearch, updateSession } = home;
 const toNumber = str => Number(str);
 
 class Home extends React.Component {
@@ -69,9 +69,13 @@ class Home extends React.Component {
   };
 
   onAction = active => {
-    this.setState({
-      active
-    });
+    if (this.state.active !== active)
+    {
+      this.setState({
+        active
+      });
+      this.props.updateSession(active);
+    }
   };
 
   render() {
@@ -96,7 +100,7 @@ class Home extends React.Component {
                 color: "#34495e"
               }}
             >
-              Put your app here:
+              Application Status :
               {active ? "Active" : "Inactive"}
             </Text>
             <SearchBox
@@ -132,11 +136,12 @@ function mapStateToProps(state, props) {
     isFetching: state.homeReducer.isFetching,
     hasError: state.homeReducer.hasError,
     errorMessage: state.homeReducer.errorMessage,
-    articles: state.homeReducer.articles
+    articles: state.homeReducer.articles,
+    active: state.homeReducer.sessionActive
   };
 }
 
 export default connect(
   mapStateToProps,
-  { getNewsHeadlines, filterHeadlinesBySearch }
+  { getNewsHeadlines, filterHeadlinesBySearch, updateSession }
 )(Home);

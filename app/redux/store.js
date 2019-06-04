@@ -3,6 +3,12 @@ import thunk from "redux-thunk";
 
 import reducers from "./rootReducer";
 
-const enhancer = compose(applyMiddleware(thunk));
+let reduxDebugEnhancer = compose;
+
+if (__DEV__) {
+    reduxDebugEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+}
+
+const enhancer = compose(applyMiddleware(thunk), reduxDebugEnhancer());
 
 export default createStore(reducers, enhancer);
