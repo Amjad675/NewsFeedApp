@@ -24,7 +24,7 @@ class Home extends React.Component {
       searchText: "",
       articles: [],
       active: true,
-      text: "300000"
+      text: "5000"
     };
 
     this.filterNews = _.debounce(this.filterNews, 1000);
