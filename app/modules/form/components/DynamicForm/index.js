@@ -1,7 +1,17 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, ScrollView, Image, TouchableOpacity } from "react-native";
-import PhotoUpload from 'react-native-photo-upload';
-import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  Image,
+  TouchableOpacity
+} from "react-native";
+import PhotoUpload from "react-native-photo-upload";
+import {
+  DocumentPicker,
+  DocumentPickerUtil
+} from "react-native-document-picker";
 import {
   Container,
   Body,
@@ -16,7 +26,7 @@ import {
   DatePicker,
   Form
 } from "native-base";
-var memberJsonData = require('../../services/memberDetails.json');
+var memberJsonData = require("../../services/memberDetails.json");
 
 class DynamicForm extends Component {
   constructor(props) {
@@ -37,16 +47,19 @@ class DynamicForm extends Component {
   }
 
   handleChange() {
-    DocumentPicker.show({
-      filetype: [DocumentPickerUtil.pdf()],
-    },(error,res) => {
-      // Android
-      console.log('res : ' + JSON.stringify(res));
-      console.log('URI : ' + res.uri);
-      console.log('Type : ' + res.type);
-      console.log('File Name : ' + res.fileName);
-      console.log('File Size : ' + res.fileSize);
-    });
+    DocumentPicker.show(
+      {
+        filetype: [DocumentPickerUtil.pdf()]
+      },
+      (error, res) => {
+        // Android
+        console.log("res : " + JSON.stringify(res));
+        console.log("URI : " + res.uri);
+        console.log("Type : " + res.type);
+        console.log("File Name : " + res.fileName);
+        console.log("File Size : " + res.fileSize);
+      }
+    );
   }
 
   renderOtherFields = () => {
@@ -55,74 +68,74 @@ class DynamicForm extends Component {
         <Text>This is ANOTHER UNKNOWN FIELD!</Text>
       </View>
     );
-  }
+  };
 
-  renderFileUpload = (field) => {
+  renderFileUpload = field => {
     // iPhone/Android
     return (
-    <View key={field.id}>
-      <Text>File Upload View</Text>
+      <View key={field.id}>
+        <Text>File Upload View</Text>
         <TouchableOpacity
           activeOpacity={0.5}
-          style={{ alignItems: 'center' }}
-          onPress={this.handleChange.bind(this)}>
+          style={{ alignItems: "center" }}
+          onPress={this.handleChange.bind(this)}
+        >
           <Image
             source={{
-              uri:
-                'https://aboutreact.com/wp-content/uploads/2018/09/clips.png',
+              uri: "https://aboutreact.com/wp-content/uploads/2018/09/clips.png"
             }}
           />
           <Text style={{ marginTop: 10 }}>Add Attachment</Text>
         </TouchableOpacity>
-        <Text >
-          {this.state.fileUri ? 'URI\n' + this.state.fileUri : ''}
+        <Text>{this.state.fileUri ? "URI\n" + this.state.fileUri : ""}</Text>
+        <Text>{this.state.fileType ? "Type\n" + this.state.fileType : ""}</Text>
+        <Text>
+          {this.state.fileName ? "File Name\n" + this.state.fileName : ""}
         </Text>
         <Text>
-          {this.state.fileType ? 'Type\n' + this.state.fileType : ''}
-        </Text>
-        <Text>
-          {this.state.fileName ? 'File Name\n' + this.state.fileName : ''}
-        </Text>
-        <Text>
-          {this.state.fileSize ? 'File Size\n' + this.state.fileSize : ''}
+          {this.state.fileSize ? "File Size\n" + this.state.fileSize : ""}
         </Text>
       </View>
-    )
-  }
+    );
+  };
 
-  renderCalendar = (field) => {
+  renderCalendar = field => {
     return (
       <View key={field.id}>
         <Text>Calendar View</Text>
         <DatePicker
-            defaultDate={new Date(2018, 4, 4)}
-            minimumDate={new Date(2018, 1, 1)}
-            maximumDate={new Date(2018, 12, 31)}
-            locale={"en"}
-            timeZoneOffsetInMinutes={undefined}
-            modalTransparent={false}
-            animationType={"fade"}
-            androidMode={"default"}
-            placeHolderText="Select date"
-            textStyle={{ color: "green" }}
-            placeHolderTextStyle={{ color: "#d3d3d3" }}
-            onDateChange={this.setDate}
-            />
+          defaultDate={new Date(2018, 4, 4)}
+          minimumDate={new Date(2018, 1, 1)}
+          maximumDate={new Date(2018, 12, 31)}
+          locale={"en"}
+          timeZoneOffsetInMinutes={undefined}
+          modalTransparent={false}
+          animationType={"fade"}
+          androidMode={"default"}
+          placeHolderText="Select date"
+          textStyle={{ color: "green" }}
+          placeHolderTextStyle={{ color: "#d3d3d3" }}
+          onDateChange={this.setDate}
+        />
       </View>
-    )
-  }
+    );
+  };
 
-  renderDropDownValues = (dropDownFields) => {
-    let dropDownUI = dropDownFields.map((option) => {
-    return (
-        <Picker.Item key={option.value+'1'} label={option.text} value={option.value} />
-      )
-    })
+  renderDropDownValues = dropDownFields => {
+    let dropDownUI = dropDownFields.map(option => {
+      return (
+        <Picker.Item
+          key={option.value + "1"}
+          label={option.text}
+          value={option.value}
+        />
+      );
+    });
 
     return dropDownUI;
-  }
+  };
 
-  renderDropDown = (field) => {
+  renderDropDown = field => {
     let dropDownLabel = field.templateOptions.label;
     let dropDownFields = field.templateOptions.options;
     return (
@@ -142,10 +155,10 @@ class DynamicForm extends Component {
           </Picker>
         </Item>
       </View>
-    )
-  }
+    );
+  };
 
-  renderImageUpload = (field) => {
+  renderImageUpload = field => {
     let imageUploadLabel = field.templateOptions.label;
     return (
       <View key={field.id}>
@@ -156,7 +169,8 @@ class DynamicForm extends Component {
               // console.log('Image base64 string: ', avatar)
               // Send request to backend to save Image
             }
-          }}>
+          }}
+        >
           <Image
             style={{
               paddingVertical: 30,
@@ -164,16 +178,18 @@ class DynamicForm extends Component {
               height: 150,
               borderRadius: 75
             }}
-            resizeMode='cover'
+            resizeMode="cover"
             source={{
-              uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'
-            }}/>
+              uri:
+                "https://facebook.github.io/react-native/docs/assets/favicon.png"
+            }}
+          />
         </PhotoUpload>
       </View>
-    )
-  }
+    );
+  };
 
-  renderCheckBoxSingle = (field) => {
+  renderCheckBoxSingle = field => {
     let checkBoxGroupLabel = field.templateOptions.label;
     return (
       <View>
@@ -184,38 +200,38 @@ class DynamicForm extends Component {
           </Body>
         </ListItem>
       </View>
-    )
-  }
+    );
+  };
 
-  renderCheckBoxGroup = (field) => {
+  renderCheckBoxGroup = field => {
     let checkBoxGroupLabel = field.templateOptions.label;
-    let checkBoxOptionNames = field.templateOptions.options
+    let checkBoxOptionNames = field.templateOptions.options;
     return (
       <View>
         <Text>{checkBoxGroupLabel}</Text>
         {this.renderCheckBoxField(checkBoxOptionNames)}
       </View>
-    )
-  }
+    );
+  };
 
-  renderCheckBoxField = (checkBoxOptionNames) => {
-    let checkBoxUI = checkBoxOptionNames.map((option) => {
-    return (
-      <View key={option.value}>
-        <ListItem>
-          <CheckBox checked={true} />
-          <Body>
-            <Text>{option.text}</Text>
-          </Body>
-        </ListItem>
-      </View>
-      )
-    })
+  renderCheckBoxField = checkBoxOptionNames => {
+    let checkBoxUI = checkBoxOptionNames.map(option => {
+      return (
+        <View key={option.value}>
+          <ListItem>
+            <CheckBox checked={true} />
+            <Body>
+              <Text>{option.text}</Text>
+            </Body>
+          </ListItem>
+        </View>
+      );
+    });
 
     return checkBoxUI;
-  }
+  };
 
-  renderRadioButton = (field) => {
+  renderRadioButton = field => {
     let radioButtonGroupLabel = field.templateOptions.label;
     let radioButtonOptionNames = field.templateOptions.options;
     return (
@@ -223,29 +239,29 @@ class DynamicForm extends Component {
         <Text>{radioButtonGroupLabel}</Text>
         {this.renderRadioButtonField(radioButtonOptionNames)}
       </View>
-    )
-  }
+    );
+  };
 
-  renderRadioButtonField = (radioButtonOptionNames) => {
-    let radioButtonsUI = radioButtonOptionNames.map((option) => {
-    return (
-      <View key={option.value}>
-        <ListItem>
-          <Left>
-            <Text>{option.text}</Text>
-          </Left>
-          <Right>
-            <Radio selected={true} />
-          </Right>
-        </ListItem>
-      </View>
-      )
-    })
+  renderRadioButtonField = radioButtonOptionNames => {
+    let radioButtonsUI = radioButtonOptionNames.map(option => {
+      return (
+        <View key={option.value}>
+          <ListItem>
+            <Left>
+              <Text>{option.text}</Text>
+            </Left>
+            <Right>
+              <Radio selected={true} />
+            </Right>
+          </ListItem>
+        </View>
+      );
+    });
 
     return radioButtonsUI;
-  }
+  };
 
-  renderTextAreaField = (field) => {
+  renderTextAreaField = field => {
     let fieldName = field.templateOptions.label;
     let fieldKey = field.key;
 
@@ -257,25 +273,37 @@ class DynamicForm extends Component {
           placeholder={fieldName}
           multiline={true}
           numberOfLines={5}
-          value={this.state.memberDetails.properties.find(a => a.key == `${fieldKey}`).value}
+          value={
+            this.state.memberDetails.properties.find(
+              a => a.key == `${fieldKey}`
+            ).value
+          }
         />
       </View>
     );
-  }
+  };
 
-  renderTextField = (field) => {
+  renderTextField = field => {
     let fieldName = field.templateOptions.label;
     let fieldKey = field.key;
 
     return (
       <View key={fieldKey}>
         <Text>{fieldName}</Text>
-        <TextInput style={{ padding: 4 }} placeholder={fieldName} value={this.state.memberDetails.properties.find(a => a.key == `${fieldKey}`).value} />
+        <TextInput
+          style={{ padding: 4 }}
+          placeholder={fieldName}
+          value={
+            this.state.memberDetails.properties.find(
+              a => a.key == `${fieldKey}`
+            ).value
+          }
+        />
       </View>
     );
-  }
+  };
 
-  renderFields = (fields) => {
+  renderFields = fields => {
     let fieldsUI = fields.map(field => {
       let fieldType = field.templateOptions.type;
 
@@ -305,7 +333,7 @@ class DynamicForm extends Component {
     });
 
     return fieldsUI;
-  }
+  };
 
   renderTab = () => {
     let model = this.props.model;
@@ -329,13 +357,12 @@ class DynamicForm extends Component {
     });
 
     return formUI;
-  }
+  };
 
-  onSubmit = (e) => {
+  onSubmit = e => {
     console.log(e);
-    if (this.props.onSubmit)
-      this.props.onSubmit(this.state);
-  }
+    if (this.props.onSubmit) this.props.onSubmit(this.state);
+  };
 
   render() {
     let title = this.props.title || "Member Profile Form";
@@ -343,10 +370,16 @@ class DynamicForm extends Component {
     return (
       <View>
         <ScrollView>
-          <Form>    
+          <Form>
             <Text>{title}</Text>
             {this.renderTab()}
-            <TouchableOpacity onPress={(e) => {this.onSubmit(e)}}><Text>UPDATE</Text></TouchableOpacity>
+            <TouchableOpacity
+              onPress={e => {
+                this.onSubmit(e);
+              }}
+            >
+              <Text>UPDATE</Text>
+            </TouchableOpacity>
           </Form>
         </ScrollView>
       </View>

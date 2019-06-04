@@ -3,15 +3,18 @@ import {
   FlatList,
   RefreshControl,
   ActivityIndicator,
-  View
+  View,
+  Text
 } from "react-native";
 import { connect } from "react-redux";
 import _ from "lodash";
 import NewsItem from "../../components/NewsItem";
 import SearchBox from "../../components/SearchBox";
-
+import UserInactivity from "react-native-user-inactivity";
 import { actions as home } from "../../index";
+
 const { getNewsHeadlines, filterHeadlinesBySearch } = home;
+const toNumber = str => Number(str);
 
 class Home extends React.Component {
   constructor() {
@@ -19,7 +22,9 @@ class Home extends React.Component {
     this.state = {
       refreshing: false,
       searchText: "",
-      articles: []
+      articles: [],
+      active: true,
+      text: "300000"
     };
 
     this.filterNews = _.debounce(this.filterNews, 1000);
@@ -63,35 +68,60 @@ class Home extends React.Component {
     //this.props.filterHeadlinesBySearch(filteredArticles);
   };
 
+  onAction = active => {
+    this.setState({
+      active
+    });
+  };
+
   render() {
     const { isFetching, articles, errorMessage, hasError } = this.props;
+    const { active, text } = this.state;
 
     if (isFetching) return <ActivityIndicator />;
     else {
       return (
-        <View>
-          <SearchBox
-            searchBoxName={"Search News by Name/Source"}
-            searchTerm={this.state.searchText}
-            handleInputChange={this.searchFieldChange}
-          />
-          <FlatList
-            style={{ backgroundColor: "#eaeaea" }}
-            contentContainerStyle={{ paddingHorizontal: 5 }}
-            ref="listRef"
-            data={this.state.articles}
-            extraData={this.state}
-            renderItem={this.renderItem}
-            initialNumToRender={5}
-            keyExtractor={(item, index) => index.toString() + "_home"}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.refreshing}
-                onRefresh={this.getNewsHeadlines}
-              />
-            }
-          />
-        </View>
+        <UserInactivity
+          timeForInactivity={toNumber(text)}
+          checkInterval={1000}
+          onAction={this.onAction}
+        >
+          <View>
+            <Text
+              style={{
+                margin: 24,
+                fontSize: 18,
+                fontWeight: "bold",
+                textAlign: "center",
+                color: "#34495e"
+              }}
+            >
+              Put your app here:
+              {active ? "Active" : "Inactive"}
+            </Text>
+            <SearchBox
+              searchBoxName={"Search News by Name/Source"}
+              searchTerm={this.state.searchText}
+              handleInputChange={this.searchFieldChange}
+            />
+            <FlatList
+              style={{ backgroundColor: "#eaeaea" }}
+              contentContainerStyle={{ paddingHorizontal: 5 }}
+              ref="listRef"
+              data={this.state.articles}
+              extraData={this.state}
+              renderItem={this.renderItem}
+              initialNumToRender={5}
+              keyExtractor={(item, index) => index.toString() + "_home"}
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this.getNewsHeadlines}
+                />
+              }
+            />
+          </View>
+        </UserInactivity>
       );
     }
   }
