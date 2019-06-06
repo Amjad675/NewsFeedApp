@@ -14,7 +14,6 @@ import UserInactivity from "react-native-user-inactivity";
 import { actions as home } from "../../index";
 
 const { getNewsHeadlines, filterHeadlinesBySearch, updateSession } = home;
-const toNumber = str => Number(str);
 
 class Home extends React.Component {
   constructor() {
@@ -24,7 +23,7 @@ class Home extends React.Component {
       searchText: "",
       articles: [],
       active: true,
-      text: "5000"
+      seconds: 30000
     };
 
     this.filterNews = _.debounce(this.filterNews, 1000);
@@ -69,8 +68,7 @@ class Home extends React.Component {
   };
 
   onAction = active => {
-    if (this.state.active !== active)
-    {
+    if (this.state.active !== active) {
       this.setState({
         active
       });
@@ -80,16 +78,12 @@ class Home extends React.Component {
 
   render() {
     const { isFetching, articles, errorMessage, hasError } = this.props;
-    const { active, text } = this.state;
+    const { active, seconds } = this.state;
 
     if (isFetching) return <ActivityIndicator />;
     else {
       return (
-        <UserInactivity
-          timeForInactivity={toNumber(text)}
-          checkInterval={1000}
-          onAction={this.onAction}
-        >
+        <UserInactivity timeForInactivity={seconds} onAction={this.onAction}>
           <View>
             <Text
               style={{
@@ -100,8 +94,7 @@ class Home extends React.Component {
                 color: "#34495e"
               }}
             >
-              Application Status :
-              {active ? "Active" : "Inactive"}
+              Application Status :{active ? "Active" : "Inactive"}
             </Text>
             <SearchBox
               searchBoxName={"Search News by Name/Source"}

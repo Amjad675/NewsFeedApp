@@ -34,7 +34,9 @@ const NewsItem = ({ article }) => {
           <View style={styles.bottom}>
             <Text
               style={styles.source}
-              onPress={() => Actions.Source({ source, title: source.name })}
+              // onPress={() => Actions.Source({ source, title: source.name })}
+              // onPress={() => Actions.PDFView({})}
+              onPress={() => Actions.replace("PDFView")}
             >
               {source.name}
             </Text>
