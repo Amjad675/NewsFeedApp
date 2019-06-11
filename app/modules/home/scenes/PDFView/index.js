@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import Pdf from "react-native-pdf";
 import RNFetchBlob from "rn-fetch-blob";
+import Share from "react-native-share";
 
 class PDFView extends Component {
   constructor(props) {
@@ -19,24 +20,6 @@ class PDFView extends Component {
   }
 
   onDownloadPDF() {
-    // let PictureDir =
-    //   Platform.OS === "ios" ? fs.dirs.DocumentDir : fs.dirs.PictureDir;
-    // RNFetchBlob.config({
-    //   fileCache: true,
-    //   addAndroidDownloads: {
-    //     useDownloadManager: true, // setting it to true will use the device's native download manager and will be shown in the notification bar.
-    //     notification: false,
-    //     description: "Downloading image."
-    //   },
-    //   path:
-    //     PictureDir + "/me_" + Math.floor(date.getTime() + date.getSeconds() / 2) // this is the path where your downloaded file will live in
-    // })
-    //   .fetch("GET", "http://samples.leanpub.com/thereactnativebook-sample.pdf")
-    //   .then(resp => {
-    //     // the path of downloaded file
-    //     // resp.path();
-    //   });
-
     let reportDir =
       Platform.OS === "ios"
         ? RNFetchBlob.fs.dirs.DocumentDir
@@ -49,16 +32,23 @@ class PDFView extends Component {
         notification: true,
         description: "PDF Report"
       },
-      path: reportDir + "/report.pdf" // this is the path where your downloaded file will live in
+      path: reportDir + "/CFSReport.pdf" // this is the path where your downloaded file will live in
     };
 
     RNFetchBlob.config(options)
       .fetch("GET", "http://samples.leanpub.com/thereactnativebook-sample.pdf")
       .then(res => {
-        console.log(RNFetchBlob.android.actionViewIntent(res.path(), "/"));
+        if (Platform.OS == 'ios')
+        {
+          Share.open({
+            title: 'PDF Report',
+            url: 'file://'+res.path()
+          }).then((res) => console.log(res))
+          .catch((err) => console.log(err));
+        }
+        res.path();
       })
       .catch(err => {
-        console.log(err);
       });
   }
 

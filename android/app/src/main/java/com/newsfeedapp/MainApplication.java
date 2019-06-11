@@ -3,6 +3,7 @@ package com.newsfeedapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import cl.json.RNSharePackage;
 import org.wonday.pdf.RCTPdfView;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
@@ -29,6 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSharePackage(),
             new RCTPdfView(),
             new RNFetchBlobPackage(),
             new ReactNativeDocumentPicker(),
