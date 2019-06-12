@@ -1,4 +1,6 @@
 rootProject.name = 'NewsFeedApp'
+include ':react-native-share'
+project(':react-native-share').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-share/android')
 include ':react-native-pdf'
 project(':react-native-pdf').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-pdf/android')
 include ':rn-fetch-blob'
