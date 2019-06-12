@@ -44,7 +44,7 @@ export function getHeadlinesBySource(source) {
 export function filterHeadlinesBySearch(articles) {
   return dispatch => {
     dispatch({ type: c.RETRIEVING_HEADLINES });
-    dispatch({ type: c.HEADLINES_AVAILABLE, data: {articles} });
+    dispatch({ type: c.HEADLINES_AVAILABLE, data: { articles } });
   };
 }
 
@@ -52,5 +52,24 @@ export function updateSession(isActive) {
   return dispatch => {
     dispatch({ type: c.UPDATE_SESSION, data: isActive });
     Actions.Login();
-  }
+  };
 }
+
+export const increaseCounter = () => {
+  return {
+    type: c.INCREMENT
+  };
+};
+
+export const decreaseCounter = () => {
+  return {
+    type: c.DECREMENT
+  };
+};
+
+export const updateName = updatedName => {
+  return {
+    type: c.UPDATE_NAME,
+    value: updatedName
+  };
+};

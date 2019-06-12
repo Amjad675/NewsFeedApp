@@ -1,6 +1,8 @@
 import * as c from "./constants";
 
 let initialState = {
+  value: 5,
+  name: "Fazlan Fairooz",
   isFetching: true,
   articles: [],
   hasError: false,
@@ -10,6 +12,24 @@ let initialState = {
 
 const homeReducer = (state = initialState, action) => {
   switch (action.type) {
+    case c.INCREMENT: {
+      return {
+        ...state,
+        value: state.value + 1
+      };
+    }
+    case c.DECREMENT: {
+      return {
+        ...state,
+        value: state.value - 1
+      };
+    }
+    case c.UPDATE_NAME: {
+      return {
+        ...state,
+        name: action.value
+      };
+    }
     case c.RETRIEVING_HEADLINES: {
       let isFetching = state.articles.length > 0 ? false : true;
 
@@ -39,7 +59,7 @@ const homeReducer = (state = initialState, action) => {
       return {
         ...state,
         sessionActive: action.data
-      }
+      };
     }
     default:
       return state;

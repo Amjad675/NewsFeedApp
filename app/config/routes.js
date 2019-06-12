@@ -9,6 +9,7 @@ import Source from "./../modules/home/scenes/Source/index";
 import Login from "./../modules/home/scenes/Security/index";
 import MemberProfile from "./../modules/form/scenes/MemberProfile/index";
 import PDFView from "./../modules/home/scenes/PDFView/index";
+import Counter from './../modules/home/scenes/Counter/index';
 
 export default class extends Component {
   render() {
@@ -20,12 +21,18 @@ export default class extends Component {
           titleStyle={navTitleStyle}
           backButtonTintColor={color.black}
         >
-          <Scene key="Login" component={Login} initial hideNavBar={true} />
+          <Scene key="Login" component={Login} hideNavBar={true} />
           <Scene key="Home" component={Home} title="Headlines" />
           <Scene key="Article" component={Article} title="Article Heading" />
           {/* <Scene key="Source" component={Source} /> */}
           {/* <Scene key="Source" component={MemberProfile} /> */}
           <Scene key="PDFView" component={PDFView} title="PDF file" />
+          <Scene
+            initial
+            key="Counter"
+            component={Counter}
+            title="Redux counter"
+          />
         </Stack>
       </Router>
     );
